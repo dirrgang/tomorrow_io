@@ -73,5 +73,9 @@ They require that API calls be wrapped in a library, available on PyPi.
 ### Why black? That makes all this code look really dumb!
 Yeah, I agree. Trying it out, since the Home Assistant project uses it, and I figured I should get used to it.
 
+### Pip install fails with `file not foud: setup.py` or similar
+Your pip is out of data. `pip install --upgrade pip` (requires at least pip version 19, 
+[link](https://setuptools.readthedocs.io/en/latest/setuptools.html#setup-cfg-only-projects))
+
 ### This FAQ seems like a list of reasons not to use this
 Yes it does, doesn't it?
