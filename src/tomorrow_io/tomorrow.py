@@ -14,8 +14,8 @@ class Tomorrow:
         latitude: float = 42.028548,
         longitude: float = -93.647507,
     ):
-        if units not in ['imperial', 'metric']:
-            raise ValueError('Can only provide imperial or metric units')
+        if units not in ["imperial", "metric"]:
+            raise ValueError("Can only provide imperial or metric units")
         self._api_key = api_key
         self.units = units
         self.longitude = longitude
