@@ -7,7 +7,7 @@ Provides a wrapper layer for interfacing with [Tomorrow.io](https://tomorrow.io)
 This is not an official package, and is primarily written for use in 
 [HomeAssistant](https://home-assistant.io) plugins.
 
-# Useage
+# Usage
 You will need to get an API key from Tomorrow.io. [Sign up](https://www.tomorrow.io/weather-api/),
 then navigate to the [keys](https://app.tomorrow.io/development/keys) page to get your API key. 
 Note that the free plan limits you to 500 requests/day and 25 requests/hour.
