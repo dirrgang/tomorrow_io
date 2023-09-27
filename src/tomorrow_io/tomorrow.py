@@ -66,7 +66,7 @@ class Tomorrow:
         self,
         latitude: float = None,
         longitude: float = None,
-        timestep: str = "1h",
+        timestep: str = "",
     ):
         """Gets a timeline, based on the parameters.
 
@@ -76,10 +76,11 @@ class Tomorrow:
             longitude = self.longitude
         if latitude is None:
             latitude = self.latitude
-        if timestep not in ["1h", "1d", None]:
+        if timestep not in ["1h", "1d", ""]:
             raise ValueError(
                 'Invalid timestep. Must be "1h" or "1d" or None for the default'
             )
+
         params = {
             "location": "{},{}".format(latitude, longitude),
             "timesteps": timestep,
@@ -95,7 +96,7 @@ class Tomorrow:
         self,
         latitude: float = None,
         longitude: float = None,
-        timestep: str = None,
+        timestep: str = "",
     ):
         """Synchronous wrapper for async_get_timeline"""
         return asyncio.get_event_loop().run_until_complete(
