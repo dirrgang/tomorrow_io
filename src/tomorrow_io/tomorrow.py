@@ -1,4 +1,5 @@
 import asyncio
+
 import aiohttp
 
 BASE_URL = "https://api.tomorrow.io/v4/"
@@ -21,6 +22,89 @@ class Tomorrow:
         self.longitude = longitude
         self.latitude = latitude
         self._session = aiohttp.ClientSession()
+
+    async def get_realtime_async(
+        self,
+        latitude: float = None,
+        longitude: float = None,
+    ):
+        """Gets a timeline, based on the parameters.
+
+        The default behaviour is to get the entirety of the available forecast, in one hour intervals.
+        """
+        if longitude is None:
+            longitude = self.longitude
+        if latitude is None:
+            latitude = self.latitude
+
+        params = {
+            "location": "{},{}".format(latitude, longitude),
+            "units": self.units,
+            "apikey": self._api_key,
+        }
+        async with self._session.get(
+            BASE_URL + "weather/realtime", params=params
+        ) as res:
+            return await res.json()
+
+    def get_realtime(
+        self,
+        latitude: float = None,
+        longitude: float = None,
+    ):
+        """Synchronous wrapper for async_get_timeline"""
+        return asyncio.get_event_loop().run_until_complete(
+            (
+                self.get_realtime_async(
+                    latitude=latitude,
+                    longitude=longitude,
+                )
+            )
+        )
+
+    async def get_forecast_async(
+        self,
+        latitude: float = None,
+        longitude: float = None,
+        timestep: str = "1h",
+    ):
+        """Gets a timeline, based on the parameters.
+
+        The default behaviour is to get the entirety of the available forecast, in one hour intervals.
+        """
+        if longitude is None:
+            longitude = self.longitude
+        if latitude is None:
+            latitude = self.latitude
+        if timestep not in ["1h", "1d", None]:
+            raise ValueError(
+                'Invalid timestep. Must be "1h" or "1d" or None for the default'
+            )
+        params = {
+            "location": "{},{}".format(latitude, longitude),
+            "timesteps": timestep,
+            "units": self.units,
+            "apikey": self._api_key,
+        }
+        async with self._session.get(
+            BASE_URL + "weather/forecast", params=params
+        ) as res:
+            return await res.json()
+
+    def get_forecast(
+        self,
+        latitude: float = None,
+        longitude: float = None,
+        timestep: str = None,
+    ):
+        """Synchronous wrapper for async_get_timeline"""
+        return asyncio.get_event_loop().run_until_complete(
+            (
+                self.get_forecast_async(
+                    latitude=latitude, longitude=longitude, timestep=timestep
+                )
+            )
+        )
 
     async def get_timeline_async(
         self,
